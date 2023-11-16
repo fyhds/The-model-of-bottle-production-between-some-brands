@@ -1,0 +1,150 @@
+#include <iostream>
+using namespace std;
+
+//in this model,i would like to provide three factors:
+// the bottle itself
+// the cola
+//and the cap
+class Cap
+{
+public:
+	virtual void prevent() = 0;
+};
+
+class Bottle
+{
+public:
+	virtual void load() = 0;
+};
+
+class Cola
+{
+public:
+	virtual void drink() = 0;
+};
+
+class Beverage
+{
+public:
+	Beverage(Cap* cap,Bottle* bottle,Cola*cola)
+	{
+		m_cap = cap;
+		m_bottle = bottle;
+		m_cola = cola;
+	}
+	void work()//write the function
+	{
+		m_cap->prevent();
+		m_bottle->load();
+		m_cola->drink();
+		
+
+
+	}
+	~Beverage()
+	{
+		if (m_cap != NULL)
+		{
+			delete m_cap;
+			m_cap = NULL;
+		}
+		if (m_bottle != NULL)
+		{
+			delete m_bottle;
+			m_bottle = NULL;
+		}
+		if (m_cola != NULL)
+		{
+			delete m_cola;
+			m_cola = NULL;
+		}
+	}
+	
+private:
+	Cap* m_cap;
+	Bottle* m_bottle;
+	Cola*m_cola;
+};
+
+class CocacolaCap:public Cap
+{
+public:
+	virtual void prevent()
+	{
+		cout << "the COCACOLA:  " << endl;
+		cout << "1.cap: " << "Prevent cola from spilling" << endl;
+	}
+};
+
+class CocacolaBottle:public Bottle
+{
+public:
+	virtual void load()
+	{
+		cout << "2.bottle: " << "Carrying cola" << endl;
+	}
+};
+class Cocacolacola:public Cola
+{
+public:
+	virtual void drink()
+	{
+		cout << "3.so what about cola? " << "just enjoy it(<' _ '>)" << endl;
+	}
+};
+
+void coca()
+{
+	Cap *cap_ =new CocacolaCap;
+	Bottle* bottle_ = new CocacolaBottle;
+	Cola* cola_ = new Cocacolacola;
+	Beverage* beverage = new Beverage(cap_, bottle_, cola_);
+	beverage->work();
+	delete beverage;
+}
+//-------------------------------------------------------------------------
+class PepsiCap :public Cap
+{
+public:
+	virtual void prevent()
+	{
+		cout << "the PEPSI:  " << endl;
+		cout << "1.cap: " << "Prevent cola from spilling" << endl;
+	}
+};
+
+class PepsiBottle :public Bottle
+{
+public:
+	virtual void load()
+	{
+		cout << "2.bottle: " << "Carrying cola" << endl;
+	}
+};
+class Pepsicola :public Cola
+{
+public:
+	virtual void drink()
+	{
+		cout << "3.so now? " << " enjoy it again" << endl;
+	}
+};
+
+void pepsi()
+{
+	Cap* cap_ = new PepsiCap;
+	Bottle* bottle_ = new PepsiBottle;
+	Cola* cola_ = new Pepsicola;
+	Beverage* beverage = new Beverage(cap_, bottle_, cola_);
+	beverage->work();
+	delete beverage;
+}
+int main()
+{
+	coca();
+	cout << "----------------------------------" << endl;
+	pepsi();
+	cout << "Of course, I think both types of cola are delicious" << endl;
+	system("pause");
+	return 0;
+}
